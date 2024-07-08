@@ -6,9 +6,9 @@
   <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 </head>
 <body class="bg-dark pt-3 pb-5" data-bs-theme="dark">
-  <nav class="fixed-top bg-secondary p-2">
+  <nav class="fixed-top bg-fluid p-2">
     ORPOS Studio
-    <button onclick="info()" class="ml-3 btn btn-dark btn-sm">Tentang</button>
+    <button onclick="info()" class="ml-3 btn bg-glass btn-sm">Tentang</button>
   </nav>
 
 <div class="d-none p-2 fixed-top bg-secondary" id="info" onclick="closeInfo()">
@@ -29,12 +29,21 @@
   <div id="grids" class="mt-5">
     <span class="wm">OrangPosting<br>studio</span>
   </div>
-  <div class="m-3">
-    <label for="formFile" class="form-label">Pilih Gambar Dengan klik <b>Add</b></label>
-    <br>
-    <small>Tips : Aplikasi ini mendukung format webp, bila perlu,  anda bisa menggunakan stiker whatsapp di folder Whatsapp/Media/Whatsapp Stickers</small>
+  <div class="m-3 alert alert-dark">
+  Dukungan Stiker Whatsapp <br>
+    <small>Aplikasi ini mendukung format webp, bila perlu,  anda bisa menggunakan stiker whatsapp di folder Whatsapp/Media/Whatsapp Stickers</small>
+  <hr>
+  Dukungan Animated Panel Meme (dengan Screen Recorder External)
+  <br>
+  <small>Anda bisa mengupload stiker animasi GIF/webp, Namun untuk menyimpannya anda perlu merekam layar dan memangkas rekaman layar tadi</small>
     <input class="d-none" type="file" id="img">
   </div>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
  <script src="elode.min.js"></script>
   <script src="html2canvas.min.js"></script>
   <script>
@@ -65,18 +74,27 @@ function closeInfo(){
       }}
     function saveImage() {
       html2canvas(document.querySelector("#grids")).then(canvas => {
-const image = canvas.toDataURL('image/png')
+const image = canvas.toDataURL('image/jpeg')
         const a = document.createElement('a')
         a.setAttribute('download', (Math.random()*243*Math.random()*1000)+'.png')
         a.setAttribute('href', image)
         a.click()
         canvas.remove()
     })}
+    function undo(){
+      let imgs = document.querySelectorAll("#grids>img")
+      imgs[imgs.length-1].remove()
+    }
+    function moreApps(){
+      window.location.href="https://orpos.vercel.app"
+    }
+    let Navbtn = ["#addimg Add","[onclick document.getElementById('grids').innerHTML=''] Reset",
+    "[onclick document.getElementById('wm').style.display='none'] Hide WM",
+    "[onclick saveImage()] Simpan",
+    "[onclick undo()] Hapus Gambar Terakhir","[onclick moreApps()] App Lainnya"]
+    .map(e => "button.btn.bg-glass.m-1.rounded-pill"+e)
 
-    let Navbtn = ["#addimg Add","[onclick document.getElementById('grids').innerHTML=''] Reset", "[onclick document.getElementById('wm').style.display='none'] Hide WM", "[onclick saveImage()] Simpan"]
-    .map(e => "button.btn.btn-none"+e)
-
-    Elode(["nav.navbar.bg-secondary.p-2.fixed-bottom", ...Navbtn]).render()
+    Elode(["nav.navbar.bg-fluid.p-2.fixed-bottom", ...Navbtn]).render()
     document.getElementById('addimg').addEventListener('click', () => {
       document.getElementById('img').click()
     })
@@ -124,6 +142,7 @@ const image = canvas.toDataURL('image/png')
     img {
       max-width: 100%;
     }
+    
     .wm {
       color: orange;
       opacity: 0.3;
@@ -133,6 +152,12 @@ const image = canvas.toDataURL('image/png')
       top: -45%%;
       font-family: Readex;
     }
+    .bg-glass{
+      border: 0;
+      background-image: linear-gradient(65deg,rgba(255,255,255,0.2234),rgba(255,255,255,0.25555));
+    }
+    .bg-fluid{
+background-image:url('data:image/svg+xml,<svg id="visual" viewBox="0 0 900 600" width="900" height="600" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"><defs><filter id="blur1" x="-10%" y="-10%" width="120%" height="120%"><feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood><feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend><feGaussianBlur stdDeviation="161" result="effect1_foregroundBlur"></feGaussianBlur></filter></defs><rect width="900" height="600" fill="%239f00ff"></rect><g filter="url(%23blur1)"><circle cx="863" cy="155" fill="%23ff6500" r="357"></circle><circle cx="645" cy="15" fill="%239f00ff" r="357"></circle><circle cx="132" cy="68" fill="%23ff6500" r="357"></circle><circle cx="620" cy="292" fill="%23ff6500" r="357"></circle><circle cx="441" cy="347" fill="%239f00ff" r="357"></circle><circle cx="67" cy="553" fill="%23ff6500" r="357"></circle></g></svg>');   }
   </style>
 </body>
 </html>
